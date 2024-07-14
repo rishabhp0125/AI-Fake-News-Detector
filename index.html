@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title text-center">Fake News Detector</h1>
+                <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data" class="mb-4">
+                    <div class="form-group">
+                        <label for="fileInput">Upload an article (.txt)</label>
+                        <input type="file" class="form-control-file" id="fileInput" name="file" accept=".txt">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Upload and Check</button>
+                </form>
+                
+                <h2 class="text-center">Or enter text directly</h2>
+                <form id="textForm" action="/predict" method="post" class="mb-4">
+                    <div class="form-group">
+                        <textarea class="form-control" name="text" rows="10" placeholder="Enter your article text here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Check Text</button>
+                </form>
+                
+                <h2 class="text-center">Or enter URL</h2>
+                <form id="urlForm" action="/predict" method="post" class="mb-4">
+                    <div class="form-group">
+                        <input type="url" class="form-control" name="url" placeholder="Enter article URL">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Check URL</button>
+                </form>
+                
+                <div id="result" class="alert alert-info text-center" role="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const textForm = document.getElementById('textForm');
+        const urlForm = document.getElementById('urlForm');
+        const resultDiv = document.getElementById('result');
+
+        async function handleSubmit(event, form) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            resultDiv.style.display = 'block';
+            resultDiv.innerText = `Prediction: ${result.prediction}`;
+        }
+
+        uploadForm.addEventListener('submit', (event) => handleSubmit(event, uploadForm));
+        textForm.addEventListener('submit', (event) => handleSubmit(event, textForm));
+        urlForm.addEventListener('submit', (event) => handleSubmit(event, urlForm));
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
