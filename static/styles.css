@@ -1,0 +1,46 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    color: #343a40;
+}
+
+.container {
+    max-width: 700px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+textarea.form-control {
+    resize: none;
+}
+
+button.btn {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 20px;
+}
