@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 
 # Load and prepare the data
-data = pd.read_csv('fake_or_real_news.csv')
+data = pd.read_csv('data.csv')
 data['fake'] = data['label'].apply(lambda x: 0 if x == "REAL" else 1)
 data = data.drop('label', axis=1)
 
